@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tc:tc-config xsi:schemaLocation="http://www.terracotta.org/schema/terracotta-4.xsd" xmlns:tc="http://www.terracotta.org/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <servers>
-    <!--Tell DSO where the Terracotta server can be found.-->
-    <server host="localhost">
-      <data>%(user.home)/terracotta/server-data</data>
-      <logs>%(user.home)/terracotta/server-logs</logs>
-      <!--statistics>%(user.home)/terracotta/statistics-%(tc.node-name)</statistics-->
-      <!--<dso>
-		<persistence>
-			<mode>permanent-store</mode>
-		</persistence>
-	  </dso>-->
-    </server>
-  </servers>
+ <servers>
+
+ <!-- For more information on working with the Terracotta configuration file, including how to add 
+      more servers, see http://www.terracotta.org/web/display/docs/About+Terracotta+Configuration+Files. 
+
+      Edit the following server element so that its host attribute contains the value matching the 
+      hostname for the Terracotta server. -->
+
+     <server host="localhost">
+       <dso-port>9510</dso-port>
+     </server>
+
+    <update-check>
+       <enabled>true</enabled>
+    </update-check>
+
+ </servers>
+
   <!--Tell DSO where to put the generated client logs-->
   <clients>
-    <logs>%(user.home)/terracotta/client-logs</logs>
+    <modules>
+      <module name="tim-tomcat-6.0" version="1.1.0"/>
+    </modules>
   </clients>
+
   <application>
     <dso>
       <roots>
@@ -24,28 +32,10 @@
           <field-name>com.jrock.Timer.timeRemaining</field-name>
         </root>
         <root>
-          <field-name>com.jrock.HelloWorld.hellos</field-name>
-        </root>
-        <root>
-          <field-name>com.jrock.HelloWorld.counter</field-name>
-        </root>
-        <!--<root>
-	  		<field-name>com.jrock.Timer.lock</field-name>
-	  	</root>
-	  	<root>
-	  		<field-name>com.jrock.Timer.init</field-name>
-	  	</root>
-	  	<root>
-	  		<field-name>com.jrock.TimerDriver.timer</field-name>
-	  	</root>-->
-        <root>
-          <field-name>com.jrock.HelloClusteredWorld.buffer</field-name>
-        </root>
-        <root>
-          <field-name>com.jrock.HelloClusteredWorld.loopCounter</field-name>
-        </root>
-        <root>
           <field-name>com.jrock.Timer.init</field-name>
+        </root>
+        <root>
+          <field-name>com.jrock.Timer.lock</field-name>
         </root>
       </roots>
       <!--Start by including all classes for instrumentation.
@@ -66,6 +56,10 @@
           <method-expression>* *..*.*(..)</method-expression>
         </autolock>
       </locks>
+
+		<web-applications>
+	      <web-application>tc-timer</web-application>
+	    </web-applications>
     </dso>
   </application>
 </tc:tc-config>
