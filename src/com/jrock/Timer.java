@@ -9,6 +9,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.proxy.dwr.Util;
 
+//git is cool!
 public class Timer {
 	private transient Vector<ScriptSession> dwrclients = new Vector<ScriptSession>();
 	
